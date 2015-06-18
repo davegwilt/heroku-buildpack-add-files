@@ -17,7 +17,7 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 # the multi build pack will source an 'export' file if it exists
 # useful for passing on environment variables
-EXPORT_PATH="$BUILD_DIR/export"
+EXPORT_PATH="$LP_DIR/export"
 
 function indent() {
   c='s/^/       /'

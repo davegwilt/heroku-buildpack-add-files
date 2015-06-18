@@ -1,28 +1,14 @@
 #!/usr/bin/env bash
-echo "BUILD_DIR: $BUILD_DIR" | indent | indent
-echo "CACHE_DIR: $CACHE_DIR" | indent | indent
-echo "LP_DIR:    $LP_DIR"    | indent | indent
+VENDOR_DIR=$BUILD_DIR/.heroku/vendor
+echo "Extracting libsasl2-dev to $VENDOR_DIR" | indent | indent
+mkdir -p $VENDOR_DIR
+tar -C $VENDOR_DIR -xzf $LP_DIR/files/libsasl2-dev/libsasl2-dev_2.1.23.dfsg1-5ubuntu1_amd64.usr.include.tar.gz
 
-TEST_VAR="a_value_for_test_var"
-export-env TEST_VAR "$TEST_VAR"
-echo "Set TEST_VAR to: $TEST_VAR" | indent | indent
-
-ls -al $BUILD_DIR
-echo
-ls -al $CACHE_DIR
-echo
-ls -al $LP_DIR
-echo
-
-mkdir -p $BUILD_DIR/.heroku/vendor
-echo "this is build" > $BUILD_DIR/.heroku/vendor/build.txt
-mkdir -p $CACHE_DIR/.heroku/vendor
-echo "this is cache" > $BUILD_DIR/.heroku/vendor/cache.txt
-
-
-
-
-
-
-cat $EXPORT_PATH
-
+if [ -z "$C_INCLUDE_PATH" ]
+then
+    C_INCLUDE_PATH=/app/.heroku/vendor/include:/app/.heroku/vendor/include/sasl
+else
+    C_INCLUDE_PATH=$C_INCLUDE_PATH:/app/.heroku/vendor/include:/app/.heroku/vendor/include/sasl
+fi
+export-env C_INCLUDE_PATH "$C_INCLUDE_PATH"
+echo "Set C_INCLUDE_PATH to: $C_INCLUDE_PATH" | indent | indent

@@ -13,5 +13,16 @@ ls -al $CACHE_DIR
 echo
 ls -al $LP_DIR
 echo
+
+mkdir -p $BUILD_DIR/.heroku/vendor
+echo "this is build" > $BUILD_DIR/.heroku/vendor/build.txt
+mkdir -p $CACHE_DIR/.heroku/vendor
+echo "this is cache" > $BUILD_DIR/.heroku/vendor/cache.txt
+
+
+
+
+
+
 cat $EXPORT_PATH
 

@@ -25,3 +25,11 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 echo "Running add-files..." | indent
 
+for CONF_FILE in $(find $LP_DIR/conf -type f -name '*.sh')
+do
+    echo "Sourcing file: $CONF_FILE" | indent
+    . $CONF_FILE
+done
+
+echo "Finished add-files" | indent
+

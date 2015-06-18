@@ -10,6 +10,15 @@ set -e
 # clean up leaking environment
 unset GIT_DIR
 
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
+
+# the multi build pack will source an 'export' file if it exists
+# useful for passing on environment variables
+EXPORT_PATH="$BUILD_DIR/export"
+
 function indent() {
   c='s/^/       /'
   case $(uname) in
@@ -18,10 +27,17 @@ function indent() {
   esac
 }
 
-# parse and derive params
-BUILD_DIR=$1
-CACHE_DIR=$2
-LP_DIR=`cd $(dirname $0); cd ..; pwd`
+function export-env (){
+  echo "export $1=$2" >> $EXPORT_PATH
+}
+
+function set-default-env (){
+  echo "export $1=\${$1:-$2}" >> $EXPORT_PATH
+}
+
+function un-set-env (){
+  echo "unset $1" >> $EXPORT_PATH
+}
 
 echo "Running add-files..." | indent
 

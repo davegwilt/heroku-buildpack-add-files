@@ -10,6 +10,7 @@ echo
 ls -al $LP_DIR
 echo
 
-export TEST_VAR="a_value_for_test_var"
-echo "Set TEST_VAR to: $TEST_VAR"
+TEST_VAR="a_value_for_test_var"
+export-env TEST_VAR "$TEST_VAR"
+echo "Set TEST_VAR to: $TEST_VAR" | indent | indent
 
